@@ -44,16 +44,12 @@ namespace biblioteca_api.Controllers
             return Ok(users);
         }
 
-        [Authorize]
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var currentUserId = int.Parse(User.Identity.Name);
-            var currentUser = await _userService.GetById(currentUserId);
-
-            // Solo permitir acceso si es el mismo usuario o un admin
-            if (id != currentUserId && !currentUser.IsAdmin())
-                return Forbid();
+            
+            var currentUser = await _userService.GetById(id);
 
             try
             {
